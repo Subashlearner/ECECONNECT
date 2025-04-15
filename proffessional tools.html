@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="logo.png" type="image/png">
+    <title>Professional Tools</title>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f4f6f9;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+        .header {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      position: relative;
+      background: linear-gradient(135deg, #0044cc, #001a66);
+      color: white;
+      box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    .header img {
+      width: 100px;
+      height: auto;
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+    .header .left-logo {
+      left: 160px;
+      background-color: white;
+      padding: 5px;
+      border-radius: 5px;
+    }
+    .header .right-logo {
+      right: 160px;
+    }
+    .head {
+    background: white; /* White background like a card */
+    color: #007bff; /* Blue text to match theme */
+    width: 80%; /* Same width as container */
+    max-width: 800px;
+    margin: 30px auto; /* Center it */
+    padding: 15px;
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+    border-radius: 12px;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1); /* Soft shadow like a card */
+}
+
+
+        .container {
+            width: 80%;
+            max-width: 800px;
+            margin: 30px auto;
+            padding: 20px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            color: #007bff;
+            border-bottom: 2px solid #007bff;
+            padding-bottom: 5px;
+            margin-top: 20px;
+            font-size: 22px;
+        }
+        .card {
+            background: #ffffff;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
+            transition: 0.3s ease-in-out;
+        }
+        .card:hover {
+            transform: scale(1.02);
+            box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
+        }
+        .card p {
+            margin: 0;
+            font-size: 16px;
+            font-weight: 500;
+        }
+        .card a {
+            background: #007bff;
+            color: white;
+            text-decoration: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            font-size: 14px;
+            transition: 0.3s;
+        }
+        .card a:hover {
+            background: #0056b3;
+        }
+        @media (max-width: 600px) {
+            .container {
+                width: 90%;
+            }
+            .card {
+                flex-direction: column;
+                text-align: center;
+                padding: 20px;
+            }
+            .card a {
+                margin-top: 10px;
+                width: 100%;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <img src="Gctlogo.png" alt="GCT Logo" class="left-logo">
+        <div>
+          <h1>GOVERNMENT COLLEGE OF TECHNOLOGY - COIMBATORE</h1>
+          <p>(An Autonomous Institution affiliated to Anna University)</p>
+          <h1>ECE DEPARTMENT PORTAL</h1>
+          <h3>ONE STEP SOLUTION FOR ACADEMICS AND CAREER GROWTH</h3>
+        </div>
+        <img src="logo.png" alt="ECE Logo" class="right-logo">
+      </div>
+    <div class="head">
+        <h1>Professional Tools</h1>
+    </div>
+    <div class="container">
+        <h2>📡 Electronics & Communication</h2>
+        <div class="card">
+            <p>🔹Matlab Download</p>
+            <a href="https://in.mathworks.com/help/install/ug/install-products-with-internet-connection.html?requestedDomain=" download target="_blank">Download ⬇️</a>
+        </div>
+        <div class="card">
+            <p>🔹NGSpice Download</p>
+            <a href="https://sourceforge.net/projects/ngspice/files/latest/download" download target="_blank">Download ⬇️</a>
+        </div>
+        <div class="card">
+            <p>🔹Proteus Download</p>
+            <a href="https://proteus.freedownloadscenter.com/windows/" download target="_blank">Download ⬇️</a>
+        </div>
+        <h2>💻 Computer Science</h2>
+        <div class="card">
+            <p>🔹Python Download</p>
+            <a href="https://www.python.org/downloads/release/python-3124/" download target="_blank">Download ⬇️</a>
+        </div>
+        <div class="card">
+            <p>🔹Java Download</p>
+            <a href="https://www.java.com/en/download/manual.jsp" download target="_blank">Download ⬇️</a>
+        </div>
+    </div>
+</body>
+</html>

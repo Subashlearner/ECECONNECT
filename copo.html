@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ECE CONNECT</title>
+    <link rel="icon" href="logo.png" type="image/png">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            text-align: center;
+        }
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            position: relative;
+            background: linear-gradient(135deg, #0044cc, #001a66);
+            color: white;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .header img {
+            width: 100px;
+            height: auto;
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+        .header .left-logo {
+            left: 160px;
+            background-color: white;
+            padding: 5px;
+            border-radius: 5px;
+        }
+        .header .right-logo {
+            right: 160px;
+        }
+        .content {
+            max-width: 900px;
+            margin: 50px auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        h1, h3, p {
+            margin: 5px 0;
+        }
+        #uploadForm {
+            margin-top: 20px;
+        }
+        input, button, a button {
+            padding: 12px;
+            margin: 8px;
+            font-size: 16px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            cursor: pointer;
+            border: none;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        #status {
+            margin-top: 15px;
+            font-weight: bold;
+            color: #d9534f;
+        }
+        #instructions {
+            display: none;
+            color: green;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <img src="Gctlogo.png" alt="GCT Logo" class="left-logo">
+        <div>
+            <h1>GOVERNMENT COLLEGE OF TECHNOLOGY - COIMBATORE</h1>
+            <p>(An Autonomous Institution affiliated to Anna University)</p>
+            <h1>ECE DEPARTMENT PORTAL</h1>
+            <h3>ONE STEP SOLUTION FOR ACADEMICS AND CAREER GROWTH</h3>
+        </div>
+        <img src="logo.png" alt="ECE Logo" class="right-logo">
+    </div>
+
+    <div class="content">
+        <h2>Upload Excel File</h2>
+        <form id="uploadForm" enctype="multipart/form-data">
+            <input type="file" id="fileInput" name="file" accept=".xlsx, .xls" required>
+            <button type="submit">Upload and Process</button>
+        </form>
+
+        <!-- Download Format Sheet Button -->
+        <a href="D:\project\frontend\Format Excel.xlsx" download id="downloadLink">
+            <button type="button">Download Format Sheet</button>
+        </a>
+
+        <!-- Instruction Message -->
+        <p id="instructions">
+            After downloading the format sheet, copy the content from the original sheet, paste it into the format sheet, upload it, and then download the output and copy the result.
+        </p>
+
+        <p id="status"></p>
+    </div>
+
+    <script>
+        document.getElementById('uploadForm').addEventListener('submit', async function (event) {
+            event.preventDefault();
+            let fileInput = document.getElementById('fileInput');
+            if (!fileInput.files.length) {
+                alert("Please select a file first!");
+                return;
+            }
+            let formData = new FormData();
+            formData.append("file", fileInput.files[0]);
+            document.getElementById('status').innerText = "Uploading and processing...";
+            try {
+                let response = await fetch("http://localhost:8080/upload", {
+                    method: "POST",
+                    body: formData
+                });
+                if (!response.ok) {
+                    throw new Error("Failed to process file");
+                }
+                let blob = await response.blob();
+                let link = document.createElement("a");
+                link.href = window.URL.createObjectURL(blob);
+                link.download = "processed.xlsx";
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                document.getElementById('status').innerText = "File processed successfully!";
+            } catch (error) {
+                console.error("Error:", error);
+                document.getElementById('status').innerText = "Error processing file.";
+            }
+        });
+
+        // Show instructions after clicking "Download Format Sheet"
+        document.getElementById("downloadLink").addEventListener("click", function () {
+            setTimeout(() => {
+                document.getElementById("instructions").style.display = "block";
+            }, 500); // slight delay for smoother appearance
+        });
+    </script>
+</body>
+</html>

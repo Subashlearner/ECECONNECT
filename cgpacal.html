@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ECE CONNECT - GPA &CGPA Calculator</title>
+    <link rel="icon" href="logo.png" type="image/png">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            text-align: center;
+        }
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            position: relative;
+            background: linear-gradient(135deg, #0044cc, #001a66);
+            color: white;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .header img {
+            width: 100px;
+            height: auto;
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+        .header .left-logo {
+            left: 160px;
+            background-color: white;
+            padding: 5px;
+            border-radius: 5px;
+        }
+        .header .right-logo {
+            right: 160px;
+        }
+
+        .content {
+            max-width: 900px;
+            margin: 50px auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        .row { display: flex; justify-content: center; gap: 10px; margin-bottom: 10px; }
+        input {
+            padding: 10px;
+            font-size: 16px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            width: 150px;
+            text-align: center;
+        }
+        button {
+            padding: 12px 20px;
+            font-size: 16px;
+            border-radius: 5px;
+            border: none;
+            background-color: #007bff;
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin: 5px;
+        }
+        button:hover { background-color: #0056b3; }
+        h3 { margin-top: 20px; font-size: 22px; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <img src="Gctlogo.png" alt="GCT Logo" class="left-logo">
+        <div>
+            <h1>GOVERNMENT COLLEGE OF TECHNOLOGY - COIMBATORE</h1>
+            <p>(An Autonomous Institution affiliated to Anna University)</p>
+            <h1>ECE DEPARTMENT PORTAL</h1>
+            <h3>ONE STEP SOLUTION FOR ACADEMICS AND CAREER GROWTH</h3>
+        </div>
+        <img src="logo.png" alt="ECE Logo" class="right-logo">
+    </div>
+
+    <div class="content">
+        <h2>GPA Calculator</h2>
+    <div class="container">
+        <div id="input-container" class="input-container">
+            <div class="row">
+                <input type="number" class="credit" placeholder="Credits" oninput="calculateGPA()">
+                <input type="number" class="grade" placeholder="Grade" step="0.01" oninput="calculateGPA()">
+            </div>
+        </div>
+        <button onclick="addInput()">Add More</button>
+        <h3>GPA: <span id="gpa-result">0.00</span></h3>
+        <button onclick="addToCGPA()">Add to CGPA</button>
+        <button onclick="restartGPA()">Restart GPA Calculator</button>
+    </div>
+    
+    <h2>CGPA Calculator</h2>
+    <div class="container">
+        <div id="inputs"></div>
+        <button onclick="calculateCGPA()">Calculate CGPA</button>
+        <h3>Your CGPA: <span id="cgpa-result">0.00</span></h3>
+    </div>
+    
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            generateInputs();
+        });
+
+        function calculateGPA() {
+            let grades = document.querySelectorAll('.grade');
+            let credits = document.querySelectorAll('.credit');
+            let totalWeightedGrade = 0;
+            let totalCredits = 0;
+            
+            for (let i = 0; i < grades.length; i++) {
+                let grade = parseFloat(grades[i].value) || 0;
+                let credit = parseFloat(credits[i].value) || 0;
+                totalWeightedGrade += grade * credit;
+                totalCredits += credit;
+            }
+            
+            let gpa = totalCredits > 0 ? (totalWeightedGrade / totalCredits).toFixed(2) : "0.00";
+            document.getElementById('gpa-result').textContent = gpa;
+        }
+
+        function addInput() {
+            let container = document.getElementById('input-container');
+            let newRow = document.createElement('div');
+            newRow.className = 'row';
+
+            let creditInput = document.createElement('input');
+            creditInput.type = 'number';
+            creditInput.className = 'credit';
+            creditInput.placeholder = 'Credits';
+            creditInput.oninput = calculateGPA;
+
+            let gradeInput = document.createElement('input');
+            gradeInput.type = 'number';
+            gradeInput.className = 'grade';
+            gradeInput.placeholder = 'Grade';
+            gradeInput.step = '0.01';
+            gradeInput.oninput = calculateGPA;
+
+            newRow.appendChild(creditInput);
+            newRow.appendChild(gradeInput);
+            container.appendChild(newRow);
+        }
+        
+        function generateInputs() {
+            let inputDiv = document.getElementById('inputs');
+            inputDiv.innerHTML = '';
+            for (let i = 1; i <= 8; i++) {
+                inputDiv.innerHTML += `<label>GPA Semester ${i}:</label> <input type='number' step='0.01' id='gpa${i}' placeholder='Enter GPA'><br>`;
+            }
+        }
+        
+        function calculateCGPA() {
+            let total = 0;
+            let count = 0;
+            for (let i = 1; i <= 8; i++) {
+                let gpa = parseFloat(document.getElementById('gpa' + i).value);
+                if (!isNaN(gpa)) {
+                    total += gpa;
+                    count++;
+                }
+            }
+            let cgpa = count > 0 ? (total / count).toFixed(2) : "0.00";
+            document.getElementById('cgpa-result').innerText = cgpa;
+        }
+
+        function addToCGPA() {
+            let gpa = document.getElementById('gpa-result').textContent;
+            for (let i = 1; i <= 8; i++) {
+                let semInput = document.getElementById('gpa' + i);
+                if (semInput.value === "") {
+                    semInput.value = gpa;
+                    calculateCGPA();
+                    break;
+                }
+            }
+        }
+
+        function restartGPA() {
+            document.getElementById('input-container').innerHTML = `<div class="row"><input type="number" class="credit" placeholder="Credits" oninput="calculateGPA()"><input type="number" class="grade" placeholder="Grade" step="0.01" oninput="calculateGPA()"></div>`;
+            document.getElementById('gpa-result').textContent = "0.00";
+        }
+    </script>
+</body>
+</html>
